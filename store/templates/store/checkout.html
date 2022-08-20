@@ -1,0 +1,82 @@
+{% extends 'store/Main.html' %}
+{% load static %}
+{% block content %}
+
+  <div class="row">
+    <div class="col-12 col-xl-6">
+      <div class="box-element" id="form-wrapper">
+        <form id="form" action="#">
+          <div id="user-info" class="row px-4 pt-4">
+            <div class="col-6">
+              <input name="name" type="text" class="form-control" placeholder="Name" required>
+            </div>
+            <div class="col-6">
+              <input name="email" type="email" class="form-control" placeholder="Email" required>
+            </div>
+          </div>
+
+          <div id="shipping-info" class="row p-4">
+            <hr>
+            <p>Shipping Information:</p>
+            <hr>
+
+            <div class="col-6 mb-2">
+              <input name="address" type="text" class="form-control" placeholder="Address">
+            </div>
+            <div class="col-6 mb-2">
+              <input name="city" type="text" class="form-control" placeholder="City">
+            </div>
+            <div class="col-6 mb-2">
+              <input name="state" type="text" class="form-control" placeholder="State">
+            </div>
+            <div class="col-6 mb-2">
+              <input name="zipcode" type="text" class="form-control" placeholder="Zipcode">
+            </div>
+            <div class="col-6 mb-2">
+              <input name="country" type="text" class="form-control" placeholder="Country">
+            </div>
+
+          </div>
+
+          <div class="row p-4">
+            <hr>
+            <input id="form-button" class="btn btn-success btn-block" value="Continue" type="submit">
+          </div>
+        </form>
+      </div>
+
+      <br>
+      <div id="payment-info" class="box-element hidden">
+        <small>Paypal Options</small>
+      </div>
+    </div>
+    
+    <div class="col-12 col-xl-6">
+      <div class="box-element p-3 mb-2">
+        <a href="{% url 'store:cart'%}" class="btn btn-outline-dark">&#x2190; Back to Cart</a>
+        <hr>
+
+        <div class="row">
+          <div class="col-6"><h3>Order Summary</h3></div>
+          <div class="col-3"><h5 style="float:right;">Items:{{order.get_cart_items}}</h5></div>
+          <div class="col-3"><h5 class="ms-4">Total:${{order.get_cart_total|floatformat:2}}</h5></div>
+        </div>
+        <hr>
+
+        {% for item in items %}
+        <div class="cart-row">
+          <div style="flex:2">
+            <img class="image-col" src="{% static 'images/placeholder.png'%}" alt="">
+          </div>
+          <div style="flex:2"><p>{{item.product.name}}</p></div>
+          <div style="flex:1"><p>${{item.product.price|floatformat:2}}</p></div>
+          <div style="flex:1"><p>x{{item.quantity}}</p></div>
+          <div style="flex:1"><p>${{item.get_total|floatformat:2}}</p></div>
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

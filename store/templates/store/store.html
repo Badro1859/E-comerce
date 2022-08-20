@@ -1,0 +1,26 @@
+{% extends 'store/Main.html' %}
+{% load static %}
+
+{% block content %}
+
+  <div class="row">
+
+    {% for product in products %}
+    <div class="col-xl-3 col-lg-4 col-6 mb-2">
+      <div class="card box-element" >
+        <img src="{{product.imageURL}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <!--p class="card-text">Some quick example.</p-->
+          <hr>
+          <button class="btn btn-outline-secondory add-btn">Add to cart</button>
+          <a href="#" class="btn btn-outline-success">View</a>
+          <h4 style="display:inline-block; float:right;"><strong>${{ product.price|floatformat:2 }}</strong></h4>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+
+{% endblock content %}
