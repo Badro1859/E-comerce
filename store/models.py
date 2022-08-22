@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=200, null=True)
+    email = models.EmailField(max_length=200, null=True)
 
     def __str__(self) -> str:
         return self.name
@@ -17,7 +17,7 @@ class Customer(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100, null=True)
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=7, decimal_places=2)
     digital = models.BooleanField(default=False, null=True, blank=True)
     image = models.ImageField(upload_to='product_images/', null=True, blank=True)
 
@@ -42,6 +42,16 @@ class Order(models.Model):
 
     def __str__(self) -> str:
         return str(self.id)
+
+    @property
+    def shipping(self):
+        shipping = False
+        items = items = self.orderitem_set.all()
+        for i in items:
+            if i.product.digital == False:
+                shipping = True
+                break
+        return shipping
 
     @property
     def get_cart_total(self):
