@@ -7,6 +7,8 @@ from . import views
 app_name='store'
 urlpatterns = [
     path('', views.store.as_view(), name='store'),
+    path('product/<int:pk>', views.ProductItem.as_view(), name='product'),
+
     path('cart/', views.cart.as_view(), name='cart'),
     path('checkout/', views.checkout.as_view(), name='checkout'),
     

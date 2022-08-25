@@ -10,10 +10,15 @@ def cartData(request, withItems=True):
         if withItems:
             items = order.orderitem_set.all()
     else:
-        cart = cookieCart(request.COOKIES['cart'], withItems)
-        order = cart['order']
-        if withItems:
-            items = cart['items']
+        try:
+            cart = cookieCart(request.COOKIES['cart'], withItems)
+            order = cart['order']
+            if withItems:
+                items = cart['items']
+        except:
+            items = []
+            order = {}
+
 
     context = {'items':items, 'order':order}
     return context

@@ -1,0 +1,38 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/product.css'%}">
+
+
+<div class="container py-3 product-item">
+    <div class="row">
+        <div class="col-6">
+            <div class="card-img-actions">
+                <img src="{{product.imageURL}}" class="card-img img-fluid img" alt="...">
+            </div>
+        </div>
+        <div class="col-6">
+            <h2>{{product.name}}</h2>
+            <h6>${{product.price}}</h6>
+            <br>
+            <h5>Description</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus rerum neque magnam? Neque ea ab inventore pariatur aperiam, maiores voluptate maxime facilis reiciendis odit hic, voluptatem quaerat nisi. Laboriosam, perspiciatis.</p>
+            
+        </div>
+    </div>
+    <div class="row">
+        <h5>Details</h5>
+        
+        <h6>brend:</h6>
+        <h6>color:</h6>
+        <h6>size:</h6>
+        <h6>brend:</h6>
+        <h6>brend:</h6>
+    </div>
+</div>
+
+
+
+{% endblock content %}

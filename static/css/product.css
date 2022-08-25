@@ -1,0 +1,8 @@
+.product-item{
+    background-color: aquamarine;
+    border-radius: 7px;
+    box-shadow: hsl(0, 0%, 80%) 0 0 16px;
+}
+.img{
+    border-radius: 5px;
+}

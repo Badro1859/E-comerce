@@ -49,16 +49,16 @@
             <a class="nav-link active" aria-current="page" href="{% url 'store:store'%}">Home</a>
           </li>
         </ul>
-        <form class="d-flex" style="margin-right: 20px !important; max-width: 50%;">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
+        <form method="get" action="{% url 'store:store'%}" class="d-flex" style="margin-right: 20px !important; max-width: 50%;">
+          <input name="search-area" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="{{search_area}}">
+          <button class="btn btn-outline-dark" type="submit">Search</button>
         </form>
         <div class="d-flex form-inline my-2 my-lg-0">
           <a href="" class="btn btn-warning">Login</a>
           <a href="{% url 'store:cart'%}">
             <img id="cart-icon" src="{% static 'images/cart.png'%}" alt="cart">
           </a>
-          <p id="cart-total">{{order.get_cart_items}}</p>
+          <p id="cart-total">{% firstof order.get_cart_items '0' %}</p>
         </div>
       </div>
     </div>

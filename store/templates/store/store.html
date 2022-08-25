@@ -8,15 +8,25 @@
     {% for product in products %}
     <div class="col-xl-3 col-lg-4 col-6 mb-2">
       <div class="card box-element">
-        <img src="{{product.imageURL}}" class="card-img-top" data-product="{{product.id}}" alt="...">
-        <div class="card-body">
-          <h5 class="card-title item" >{{ product.name }}</h5>
-          <!--p class="card-text">Some quick example.</p-->
-          <hr>
-          <button data-product="{{product.id}}" data-action="add" 
-            class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
-          {% comment %} <a href="#" class="btn btn-outline-success">View</a> {% endcomment %}
-          <h4 style="display:inline-block; float:right;"><strong>${{ product.price|floatformat:2 }}</strong></h4>
+
+        <div class="card-img-actions">        
+          <img src="{{product.imageURL}}" class="card-img img-fluid" width="96" height="350" alt="">
+        </div>
+        
+        <div class="card-body bg-light text-center">
+          <div class="mb-2">
+              <h6 class=" mb-3">
+                  <a href="{% url 'store:product' product.id %}" class="title mb-2" data-abc="true">{{product.name}}</a>
+              </h6>
+          </div>
+  
+          <h3 class="mb-0">${{ product.price|floatformat:2 }}</h3>
+  
+          <div class="text-muted mb-3">34 reviews</div>
+  
+          <button type="button" data-product="{{product.id}}" data-action="add" class="btn bg-cart add-btn update-cart"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>
+  
+          
         </div>
       </div>
     </div>
@@ -29,17 +39,11 @@
     for (i=0; i<items.length; i++) {
       items[i].addEventListener('click', function(){
           var productId = this.dataset.product;
-          var action = this.dataset.action;
-          console.log('product:',productId, 'action:', action);
-          {% comment %}
-          if (user == "AnonymousUser"){
-              console.log("User is not athenticated");
-              addCookieItem(productId, action);
-          }else{
-              updateUserOrder(productId, action);
-          } {% endcomment %}
+          window.location.href = "/product/"+productId.toString();
       });
   }
   </script>
 
 {% endblock content %}
+
+
