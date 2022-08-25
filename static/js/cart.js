@@ -7,10 +7,11 @@ for (i=0; i<updateBtns.length; i++) {
     updateBtns[i].addEventListener('click', function(){
         var productId = this.dataset.product;
         var action = this.dataset.action;
-        console.log('product:',productId, 'action:', action);
+
         if (user == "AnonymousUser"){
             console.log("User is not athenticated");
             addCookieItem(productId, action);
+            updateUserOrder(productId, action);
         }else{
             updateUserOrder(productId, action);
         }
@@ -36,21 +37,22 @@ function updateUserOrder(productId, action) {
         return response.json();
     })
     .then((data) => {
-        console.log('data:', data);
-        if (data['remove']){
-            location.reload();
-        }
-        else{
-            // for the nav cart icon
-            document.getElementById('cart-total').textContent = data['total-items'];
-            
-            // in the cart page 
-            document.getElementById('total-price').textContent = '$'+ data['total-price'];
+        // for the nav cart icon
+        document.getElementById('cart-total').textContent = data['total-items'];
+
+        if (document.getElementById(productId.toString())){
             document.getElementById('total-items').textContent = data['total-items'];
-            var id = data['item-id'];
-            document.getElementById('qte-'+id).textContent = data['item-quantity'];
-            document.getElementById('price-'+id).textContent = '$'+ data['item-price'];
+            if (data['remove']){
+                document.getElementById(productId.toString()).remove();
+            }
+            else{
+                // in the cart page 
+                document.getElementById('total-price').textContent = '$'+ data['total-price'];
+                document.getElementById('qte-'+productId.toString()).textContent = data['item-quantity'];
+                document.getElementById('price-'+productId.toString()).textContent = '$'+ data['item-price'];
+            }
         }
+        
     });
 }
 
@@ -68,12 +70,29 @@ function addCookieItem(productId, action) {
         cart[productId]['quantity'] -= 1
 
         if(cart[productId]['quantity'] <= 0) {
-            delete cart[productId]   
+            delete cart[productId]
+            var reload = true;   
         }
     } 
     console.log('cart', cart);
     document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/;';
+    
+    // window.location.reload();
+    // update the cart icon
+    // cartItems = 0
+    // cart.forEach(element => {
+    //     cartItems += element['quantity']
+    // });
+    // console.log('cartItems', cartItems)
+    // document.getElementById('cart-total').textContent = cartItems;
 }
+
+
+function updateNumbersInPage() {
+
+}
+
+
 
 /******************** manage the cart cookie for not logged user  **********************/
 
@@ -83,8 +102,7 @@ if (cart == undefined) {
     console.log('Cart Created!', cart);
     document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/;';
 }
-console.log('cart', cart);
-
+// console.log('cart', cart);
 
 function getCookie(name) {
     // split cookie string and get all individual name=value pairs in an array

@@ -57,6 +57,13 @@ function submitFormData() {
     .then((data) => {
         console.log("Successs:", data);
         alert('Transaction completed');
+
+        // clear cart for unauthenticated users
+        cart = {};
+        document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/;';
+        
+        // redirect to home page
         window.location.href = "/";
     })
+
 }

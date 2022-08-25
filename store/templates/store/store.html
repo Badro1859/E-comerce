@@ -7,15 +7,15 @@
 
     {% for product in products %}
     <div class="col-xl-3 col-lg-4 col-6 mb-2">
-      <div class="card box-element" >
-        <img src="{{product.imageURL}}" class="card-img-top" alt="...">
+      <div class="card box-element">
+        <img src="{{product.imageURL}}" class="card-img-top" data-product="{{product.id}}" alt="...">
         <div class="card-body">
-          <h5 class="card-title">{{ product.name }}</h5>
+          <h5 class="card-title item" >{{ product.name }}</h5>
           <!--p class="card-text">Some quick example.</p-->
           <hr>
           <button data-product="{{product.id}}" data-action="add" 
-            class="btn btn-outline-secondory add-btn update-cart">Add to cart</button>
-          <a href="#" class="btn btn-outline-success">View</a>
+            class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
+          {% comment %} <a href="#" class="btn btn-outline-success">View</a> {% endcomment %}
           <h4 style="display:inline-block; float:right;"><strong>${{ product.price|floatformat:2 }}</strong></h4>
         </div>
       </div>
@@ -23,5 +23,23 @@
     {% endfor %}
 
   </div>
+
+  <script>
+    var items = document.getElementsByClassName('item');
+    for (i=0; i<items.length; i++) {
+      items[i].addEventListener('click', function(){
+          var productId = this.dataset.product;
+          var action = this.dataset.action;
+          console.log('product:',productId, 'action:', action);
+          {% comment %}
+          if (user == "AnonymousUser"){
+              console.log("User is not athenticated");
+              addCookieItem(productId, action);
+          }else{
+              updateUserOrder(productId, action);
+          } {% endcomment %}
+      });
+  }
+  </script>
 
 {% endblock content %}
